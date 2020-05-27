@@ -7,89 +7,54 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { TextInput, useTheme } from "react-native-paper";
+import { TextInput } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 
-interface IProps {}
+import { addElementToOverviewList } from "../actions/Actions";
+import { ITask, StoreState } from "../reducers/Reducer";
 
-interface ITask {
-  title: string;
-  // description: string;
-}
+import { ListItem } from "./ListItem";
 
-const data = [
-  {
-    title: "wasd",
-  },
-  {
-    title: "asdasd",
-  },
-];
-
-const extractkey = (_: any, index: number) => {
+const extractkey = (_: ITask, index: number) => {
   return index.toString();
 };
 
-export const Overview = (props: IProps) => {
-  const [text1, setText] = useState("");
-  const [dataState, setDataState] = useState(data);
+const renderItem = (item: ListRenderItemInfo<ITask>) => {
+  return <ListItem item={item.item} />;
+};
 
-  const theme = useTheme();
-
-  const renderItem = useCallback(
-    (item: ListRenderItemInfo<ITask>) => {
-      return (
-        <TouchableOpacity
-          style={{
-            backgroundColor: theme.colors.surface,
-            borderColor: theme.colors.surface,
-            borderRadius: 4,
-            borderWidth: 1,
-            margin: 4,
-            padding: 4,
-          }}
-        >
-          <Text>{item.item.title} </Text>
-        </TouchableOpacity>
-      );
-    },
-    [theme.colors.surface]
-  );
+export const Overview = () => {
+  const dispatch = useDispatch();
+  const [text, setText] = useState("");
 
   const onPress = useCallback(() => {
-    const newd = dataState.concat({ title: text1 });
-    setDataState(newd);
-  }, [dataState, text1]);
+    dispatch(addElementToOverviewList({ title: text }));
+  }, [dispatch, text]);
 
   const onChangeText = useCallback((newText: string) => {
     setText(newText);
   }, []);
 
+  const listData = useSelector((state: StoreState) => state);
+
   return (
     <View style={styles.container}>
-      <View style={{ margin: 12, flex: 1, borderColor: "red", borderWidth: 2 }}>
-        <TextInput
-          label="Todo"
-          value={text1}
-          onChangeText={onChangeText}
-          mode="outlined"
-          placeholder="Aufgabe"
-          style={{ marginBottom: 12 }}
-        />
-        <TouchableOpacity onPress={onPress}>
-          <Text>Add to list</Text>
-        </TouchableOpacity>
-        <FlatList
-          data={dataState}
-          renderItem={renderItem}
-          keyExtractor={extractkey}
-          style={{
-            flex: 1,
-            borderColor: "green",
-            borderWidth: 2,
-            marginTop: 12,
-          }}
-        />
-      </View>
+      <TextInput
+        label="Todo"
+        value={text}
+        onChangeText={onChangeText}
+        mode="outlined"
+        placeholder="Aufgabe"
+      />
+      <TouchableOpacity onPress={onPress} style={styles.touchable}>
+        <Text>Add to list</Text>
+      </TouchableOpacity>
+      <FlatList
+        data={listData}
+        renderItem={renderItem}
+        keyExtractor={extractkey}
+        style={styles.flatList}
+      />
     </View>
   );
 };
@@ -97,5 +62,12 @@ export const Overview = (props: IProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 12,
+  },
+  flatList: {
+    flex: 1,
+  },
+  touchable: {
+    marginVertical: 12,
   },
 });

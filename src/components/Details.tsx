@@ -1,12 +1,24 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
-interface IProps {}
+import { StoreState } from "../reducers/Reducer";
 
-export const Details = (props: IProps) => {
+export const Details = ({ route }: { route: { params: { id: number } } }) => {
+  const { id } = route.params;
+
+  const description = useSelector((state: StoreState) => state[id].description);
+
   return (
-    <View>
-      <Text>Hello</Text>
+    <View style={styles.container}>
+      <Text>{description || "No description yet"}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 12,
+  },
+});

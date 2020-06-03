@@ -1,0 +1,6 @@
+{
+    "eslint.enable": true,
+    "editor.formatOnSave": true,
+    "eslint.format.enable": true,
+    "eslint.run": "onType",
+}

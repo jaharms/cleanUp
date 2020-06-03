@@ -61,3 +61,6 @@ buck-out/
 # Expo
 .expo/*
 web-build/
+
+# Other
+android/app/src/main/java/com/cleanup/generated/

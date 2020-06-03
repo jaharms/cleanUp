@@ -1,39 +1,36 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 import {
   FlatList,
+  Keyboard,
   ListRenderItemInfo,
   StyleSheet,
   View,
-  Keyboard,
-} from "react-native";
-import { TextInput, useTheme } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-
-
-import { addElementToOverviewList } from "../actions/Actions";
-import { ITask, StoreState } from "../reducers/Reducer";
-
-import { ListItem } from "./ListItem";
+} from 'react-native';
 import { Icon } from 'react-native-elements';
+import { TextInput, useTheme } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 
-const extractkey = (_: ITask, index: number) => {
+import { addElementToOverviewList } from '../actions/Actions';
+import { IRoom, StoreState } from '../reducers/Reducer';
+
+import { ListItem } from './ListItem';
+
+const extractkey = (_: IRoom, index: number) => {
   return index.toString();
 };
 
-const renderItem = (item: ListRenderItemInfo<ITask>) => {
+const renderItem = (item: ListRenderItemInfo<IRoom>) => {
   return <ListItem item={item.item} />;
 };
 
 export const Overview = () => {
   const dispatch = useDispatch();
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const theme = useTheme();
 
-  console.log('THEME', theme);
-
   const onPress = useCallback(() => {
-    dispatch(addElementToOverviewList(text ));
-    setText("")
+    if (!(text.trim() === '')) dispatch(addElementToOverviewList(text));
+    setText('');
     Keyboard.dismiss();
   }, [dispatch, text]);
 
@@ -45,17 +42,19 @@ export const Overview = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row', marginBottom: 12, alignItems: 'center'}}>
+      <View
+        style={{ flexDirection: 'row', marginBottom: 12, alignItems: 'center' }}
+      >
         <TextInput
-          label="Aufgabe"
+          label="Raum"
           value={text}
           onChangeText={onChangeText}
           mode="outlined"
-          style={{flex: 1, marginRight: 4}}
+          style={{ flex: 1, marginRight: 4 }}
           onSubmitEditing={onPress}
           theme={theme}
         />
-        <Icon reverse name='add' color='#006699' onPress={onPress}/>
+        <Icon reverse name="add" color="#006699" onPress={onPress} />
       </View>
       <FlatList
         data={listData}

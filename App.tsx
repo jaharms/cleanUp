@@ -1,16 +1,16 @@
 import {
   NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
-} from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
+} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-import { Details } from "./src/components/Details";
-import { Overview } from "./src/components/Overview";
-import { reducer } from "./src/reducers/Reducer";
+import { Details } from './src/components/Details';
+import { Overview } from './src/components/Overview';
+import { reducer } from './src/reducers/Reducer';
 
 const Stack = createStackNavigator();
 const store = createStore(reducer);
@@ -22,7 +22,7 @@ export const App = () => {
     colors: {
       ...DefaultTheme.colors,
       primary: '#006699',
-      // accent: 
+      // accent:
       // background: '#ffffff',
       // surface:
       // text:
@@ -35,11 +35,11 @@ export const App = () => {
   const navigationTheme = {
     ...NavigationDefaultTheme,
     colors: {
-      background: "#cceeff",
-      border: "#006699",
-      card: "#006699",
-      primary: "#ffffff",
-      text: "#ffffff",
+      background: '#cceeff',
+      border: '#006699',
+      card: '#006699',
+      primary: '#ffffff',
+      text: '#ffffff',
     },
   };
 

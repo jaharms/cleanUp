@@ -3,17 +3,18 @@ import {
   FlatList,
   ListRenderItemInfo,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
+  Keyboard,
 } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, useTheme } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
+
 
 import { addElementToOverviewList } from "../actions/Actions";
 import { ITask, StoreState } from "../reducers/Reducer";
 
 import { ListItem } from "./ListItem";
+import { Icon } from 'react-native-elements';
 
 const extractkey = (_: ITask, index: number) => {
   return index.toString();
@@ -26,9 +27,14 @@ const renderItem = (item: ListRenderItemInfo<ITask>) => {
 export const Overview = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
+  const theme = useTheme();
+
+  console.log('THEME', theme);
 
   const onPress = useCallback(() => {
-    dispatch(addElementToOverviewList({ title: text }));
+    dispatch(addElementToOverviewList(text ));
+    setText("")
+    Keyboard.dismiss();
   }, [dispatch, text]);
 
   const onChangeText = useCallback((newText: string) => {
@@ -39,16 +45,18 @@ export const Overview = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        label="Todo"
-        value={text}
-        onChangeText={onChangeText}
-        mode="outlined"
-        placeholder="Aufgabe"
-      />
-      <TouchableOpacity onPress={onPress} style={styles.touchable}>
-        <Text>Add to list</Text>
-      </TouchableOpacity>
+      <View style={{flexDirection: 'row', marginBottom: 12, alignItems: 'center'}}>
+        <TextInput
+          label="Aufgabe"
+          value={text}
+          onChangeText={onChangeText}
+          mode="outlined"
+          style={{flex: 1, marginRight: 4}}
+          onSubmitEditing={onPress}
+          theme={theme}
+        />
+        <Icon reverse name='add' color='#006699' onPress={onPress}/>
+      </View>
       <FlatList
         data={listData}
         renderItem={renderItem}
@@ -66,8 +74,5 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
-  },
-  touchable: {
-    marginVertical: 12,
   },
 });

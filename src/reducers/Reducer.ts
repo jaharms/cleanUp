@@ -33,6 +33,8 @@ export const reducer = (state = initialState, action: Action) => {
           id: state.length,
         },
       ];
+    }case ActionTypes.RemoveElementFromOverviewList: {
+      return state.filter((item : ITask) =>  item.id !== action.payload.id);
     }
     default: {
       return state;

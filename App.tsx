@@ -19,12 +19,17 @@ export const App = () => {
   const theme = {
     ...DefaultTheme,
     // roundness: 2,
-    // colors: {
-    //   ...DefaultTheme.colors,
-    //   primary: "#3498db",
-    //   accent: "#f1c40f",
-    //   background: "red",
-    // },
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#006699',
+      // accent: 
+      // background: '#ffffff',
+      // surface:
+      // text:
+      // disabled:
+      // placeholder:
+      // backdrop :
+    },
   };
 
   const navigationTheme = {

@@ -1,12 +1,25 @@
 import { ActionTypes } from "../constants/ActionTypes.enum";
 
 export type Action = {
-  type: ActionTypes;
+  type: ActionTypes.AddElementToOverviewList;
   payload: {
-    title: string;
-  };
+    title: string 
+      
+  } 
+} |{
+  type: ActionTypes.RemoveElementFromOverviewList;
+  payload: {
+    id: number 
+      
+  } 
+} ;
+
+export const addElementToOverviewList = (title: string ) => {
+  return { type: ActionTypes.AddElementToOverviewList, payload:{ title} };
 };
 
-export const addElementToOverviewList = (data: { title: string }) => {
-  return { type: ActionTypes.AddElementToOverviewList, payload: data };
+
+export const removeElementFromOverviewList = (id: number) => {
+  return { type: ActionTypes.RemoveElementFromOverviewList, payload: {id} };
 };
+

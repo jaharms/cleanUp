@@ -6,7 +6,7 @@ import { useTheme } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { removeElementFromOverviewList } from '../actions/Actions';
-import { IRoom, ITask } from '../reducers/Reducer';
+import { IRoom } from '../reducers/Reducer';
 
 interface IProps {
   item: IRoom;
@@ -38,7 +38,7 @@ export const ListItem: React.FC<IProps> = (props: IProps) => {
         },
       ]}
     >
-      <Text style={{ flex: 1 }}>{title} </Text>
+      <Text style={styles.text}>{title} </Text>
       <Icon
         reverse
         name="remove"
@@ -51,6 +51,9 @@ export const ListItem: React.FC<IProps> = (props: IProps) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    flex: 1,
+  },
   touchable: {
     alignItems: 'center',
     borderRadius: 4,

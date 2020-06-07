@@ -26,6 +26,28 @@ export type Action =
         taskId: number;
         roomId: number;
       };
+    }
+  | {
+      type: ActionTypes.ChangeRoomDescription;
+      payload: {
+        id: number;
+        description: string;
+      };
+    }
+  | {
+      type: ActionTypes.ChangeTaskDescription;
+      payload: {
+        roomId: number;
+        taskId: number;
+        additionalInformation: string;
+      };
+    }
+  | {
+      type: ActionTypes.CheckTask;
+      payload: {
+        roomId: number;
+        taskId: number;
+      };
     };
 
 export const addElementToOverviewList = (title: string) => {
@@ -42,4 +64,29 @@ export const removeTaskFromRoom = (taskId: number, roomId: number) => {
 
 export const removeElementFromOverviewList = (id: number) => {
   return { type: ActionTypes.RemoveElementFromOverviewList, payload: { id } };
+};
+
+export const changeRoomDescription = (id: number, description: string) => {
+  return {
+    type: ActionTypes.ChangeRoomDescription,
+    payload: { id, description },
+  };
+};
+
+export const changeTaskDescription = (
+  roomId: number,
+  taskId: number,
+  additionalInformation: string,
+) => {
+  return {
+    type: ActionTypes.ChangeTaskDescription,
+    payload: { roomId, taskId, additionalInformation },
+  };
+};
+
+export const checkTask = (roomId: number, taskId: number) => {
+  return {
+    type: ActionTypes.CheckTask,
+    payload: { roomId, taskId },
+  };
 };

@@ -99,6 +99,49 @@ export const reducer = (state = initialState, action: Action) => {
       );
       return newState;
     }
+    case ActionTypes.ChangeRoomDescription: {
+      const currentRoom = state[action.payload.id];
+      const updatedRoom = {
+        ...currentRoom,
+        description: action.payload.description,
+      };
+      const newState = state.map((room: IRoom) =>
+        room.id !== action.payload.id ? room : updatedRoom,
+      );
+      return newState;
+    }
+    case ActionTypes.ChangeTaskDescription: {
+      const currentRoom: IRoom = state[action.payload.roomId];
+      const currentTask: ITask = currentRoom.tasks[action.payload.taskId];
+      const newTask: ITask = {
+        ...currentTask,
+        additionalInformation: action.payload.additionalInformation,
+      };
+      const newTasks = currentRoom.tasks.map((task: ITask) =>
+        task.id !== action.payload.taskId ? task : newTask,
+      );
+      const updatedRoom: IRoom = { ...currentRoom, tasks: newTasks };
+      const newState = state.map((room: IRoom) =>
+        room.id !== action.payload.roomId ? room : updatedRoom,
+      );
+      return newState;
+    }
+    case ActionTypes.CheckTask: {
+      const currentRoom: IRoom = state[action.payload.roomId];
+      const currentTask: ITask = currentRoom.tasks[action.payload.taskId];
+      const newTask: ITask = {
+        ...currentTask,
+        finished: true,
+      };
+      const newTasks = currentRoom.tasks.map((task: ITask) =>
+        task.id !== action.payload.taskId ? task : newTask,
+      );
+      const updatedRoom: IRoom = { ...currentRoom, tasks: newTasks };
+      const newState = state.map((room: IRoom) =>
+        room.id !== action.payload.roomId ? room : updatedRoom,
+      );
+      return newState;
+    }
     default: {
       return state;
     }

@@ -10,6 +10,7 @@ import { createStore } from 'redux';
 
 import { Details } from './src/components/Details';
 import { Overview } from './src/components/Overview';
+import { TaskSettings } from './src/components/TaskSettings';
 import { reducer } from './src/reducers/Reducer';
 
 const Stack = createStackNavigator();
@@ -48,8 +49,13 @@ export const App = () => {
       <PaperProvider theme={theme}>
         <NavigationContainer theme={navigationTheme}>
           <Stack.Navigator>
-            <Stack.Screen name="Overview" component={Overview} />
+            <Stack.Screen
+              name="Overview"
+              component={Overview}
+              options={{ headerTitle: 'Räume' }}
+            />
             <Stack.Screen name="Details" component={Details} />
+            <Stack.Screen name="TaskSettings" component={TaskSettings} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
